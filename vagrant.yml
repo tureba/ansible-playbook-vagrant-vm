@@ -20,6 +20,7 @@
       local_action:
         module: blockinfile
         path: '~/.ssh/config'
+        create: yes
         marker: "# {mark} ANSIBLE MANAGED BLOCK - {{ ansible_hostname }} -->"
         block: |
           Host {{ ansible_hostname }} {{ ansible_hostname }}.local
