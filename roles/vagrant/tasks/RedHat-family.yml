@@ -1,9 +1,15 @@
 ---
 
+- assert:
+    that: ansible_facts['distribution_major_version']|int >= 6
+    fail_msg: "apenas para RHEL/CentOS >= 6"
+    quiet: true
+
 - name: instala EPEL
   yum:
     name: epel-release
     state: latest
+  when: ansible_distribution == 'CentOS'
 
 - name: instala avahi
   yum:
@@ -32,3 +38,9 @@
     regexp: '^SELINUX='
     line: 'SELINUX=disabled'
 
+- name: configurações gerais de shell interativo
+  blockinfile:
+    path: /etc/profile.d/sh.local
+    block: |
+      export PAGER=less
+      export PS1='[\u@\h \w]\$ '
