@@ -1,16 +1,7 @@
 ---
 
-- name: resolução de nomes entre VMs (Debian)
-  include_tasks: Debian-family.yml
-  when:
-    - ansible_facts['distribution_file_variety'] == "Debian"
-    - ansible_facts['distribution_major_version']|int >= 8
-
-- name: resolução de nomes entre VMs (RedHat)
-  include_tasks: RedHat-family.yml
-  when:
-    - ansible_facts['distribution_file_variety'] == "RedHat"
-    - ansible_facts['distribution_major_version']|int >= 6
+- name: resolução de nomes entre VMs
+  include_tasks: "{{ ansible_facts['distribution_file_variety'] }}.yml"
 
 - name: cria chaves do root
   user:
