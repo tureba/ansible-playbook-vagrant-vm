@@ -10,6 +10,13 @@
       run_once: True
       register: "usuario_local"
 
+    - name: permite acesso por ssh do host para a vm
+      become: true
+      authorized_key:
+        user: root
+        state: present
+        key: "{{ usuario_local.ssh_public_key }}"
+
     - name: limpa registros do IP no known_hosts local
       local_action:
         module: known_hosts
@@ -27,9 +34,3 @@
           Hostname {{ ip|default(ansible_host) }}
           User root
           StrictHostKeyChecking accept-new
-
-- hosts: all
-  become: true
-  roles:
-    - vagrant
-

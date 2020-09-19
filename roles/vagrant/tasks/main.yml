@@ -11,11 +11,5 @@
     regexp: '^#?PasswordAuthentication'
     line: 'PasswordAuthentication yes'
 
-- name: permite acesso por ssh externo
-  authorized_key:
-    user: root
-    state: present
-    key: "{{ usuario_local.ssh_public_key }}"
-
 - name: tarefas específicas de distribuição
   include_tasks: "{{ ansible_facts['distribution_file_variety'] }}.yml"
